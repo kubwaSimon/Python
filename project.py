@@ -1,6 +1,50 @@
+import random
+
 MAX_LINES = 3
 MAX_BET = 100
 MIN_BET = 5
+
+ROW = 3
+COL = 3
+
+symbol_cnt ={
+    "A": 2,
+    "B": 3,
+    "C": 5,
+    "D": 7
+}
+
+def get_project_count(rows,cols,symbols):
+    all_symbols = []
+    for symbol, symbol_cnt in symbols.items():
+        for _ in range(symbol_cnt):
+            all_symbols.append(symbol)
+
+
+    columns = []
+    for _ in range(cols):
+        column = []
+        current_symbols = all_symbols[:]
+        for _ in range(rows):
+            value = random.choice(all_symbols)
+            current_symbols.remove(value)
+            column.append(value)
+        columns.append(column)
+    return columns
+
+
+
+def get_project_count(columns):
+    for row in range (len(columns[0])):
+        for i, column in enumerate(columns):
+            if i != len(columns) - 1:
+                print(column[row], end = " | ")
+            else:
+                print(column[row], end ="")
+
+    print()
+
+
 
 #collecting user input
 def deposit():
@@ -15,7 +59,7 @@ def deposit():
         else:
             print("ENTER AMOUNT.")
 
-            return amount
+    return amount
         
 #Number of lines
 def get_number_of_lines():
@@ -58,7 +102,8 @@ def get_bet():
             print("ENTER BET AMOUNT.")
 
 
-"""def main():
+def main():
+  
     yourbalance = deposit()
     lines= get_number_of_lines()
     while True:
@@ -72,30 +117,10 @@ def get_bet():
           break
     print(f"ENTERED BET IS|Ksh {bet} on {lines} lines. Total bet is equal to: Ksh{total_bet}")
     
-    
+    slots = get_project_count(ROW, COL, symbol_cnt)
+    get_project_count(slots)
    
 
-main()"""
-def main():
-    yourbalance = deposit()
-    if yourbalance is None or not isinstance(yourbalance, int):
-        print("Error: Unable to retrieve balance. Please check your deposit function.")
-        return
-    
-    lines = get_number_of_lines()
-    while True:
-        bet = get_bet()
-        if bet is None or not isinstance(bet, int):
-            print("Error: Invalid bet amount. Please enter a valid integer.")
-            continue
-        
-        total_bet = bet * lines
-        if total_bet > yourbalance:
-            print(f"NOT ENOUGH BALANCE, BALANCE IS:|| Ksh{yourbalance}")
-        else:
-            break
-    
-    print(f"ENTERED BET IS|Ksh {bet} on {lines} lines. Total bet is equal to: Ksh{total_bet}")
-
 main()
+
 
